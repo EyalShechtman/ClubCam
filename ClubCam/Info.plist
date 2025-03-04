@@ -1,4 +1,3 @@
 {
-	"" = 0;
-	CFBundleIdentifier = "We need access to your camera for capturing photos";
+	"NSCameraUsageDescription" = "We need access to your camera for capturing photos";
 }
