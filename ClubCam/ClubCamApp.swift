@@ -9,16 +9,28 @@ import SwiftUI
 
 @main
 struct ClubCamApp: App {
-    // Add StateObjects for app-wide state management
-    @StateObject private var authManager = AuthManager()
-    @StateObject private var albumManager = AlbumManager()
+    @StateObject private var authViewModel = AuthViewModel()
+    @StateObject private var eventsViewModel = EventsViewModel()
     
     var body: some Scene {
         WindowGroup {
-            // Pass the managers to ContentView
             ContentView()
-                .environmentObject(authManager)
-                .environmentObject(albumManager)
+                .environmentObject(authViewModel)
+                .environmentObject(eventsViewModel)
+        }
+    }
+}
+
+struct ContentView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
+    var body: some View {
+        Group {
+            if authViewModel.isAuthenticated {
+                EventsListView()
+            } else {
+                LoginView()
+            }
         }
     }
 }

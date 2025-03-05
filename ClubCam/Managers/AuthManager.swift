@@ -9,42 +9,43 @@ import Foundation
 import Combine
 
 class AuthManager: ObservableObject {
-    @Published var isAuthenticated = false
     @Published var currentUser: User?
+    @Published var isAuthenticated = false
     
-    func login(email: String, password: String, completion: @escaping (Bool) -> Void) {
-        // In a real app, you would implement actual authentication logic here
-        // For now, we'll simulate a successful login
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.isAuthenticated = true
-            self.currentUser = User(
-                id: UUID().uuidString,
+    // Mock authentication for development
+    func signIn(email: String, password: String) {
+        // In a real app, you would validate credentials against a backend
+        if email.contains("@") && password.count >= 6 {
+            // Simulate successful login
+            let userId = UUID().uuidString
+            currentUser = User(
+                id: userId,
                 email: email,
-                joinDate: Date(),
-                displayName: email.components(separatedBy: "@").first
+                username: email.components(separatedBy: "@").first,
+                displayName: nil,
+                avatarUrl: nil
             )
-            completion(true)
+            isAuthenticated = true
         }
     }
     
-    func signUp(email: String, password: String, completion: @escaping (Bool) -> Void) {
-        // In a real app, you would implement actual account creation logic here
-        // For now, we'll simulate a successful signup
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.isAuthenticated = true
-            self.currentUser = User(
-                id: UUID().uuidString,
+    func signUp(email: String, password: String) {
+        // In a real app, you would create a new user in your backend
+        if email.contains("@") && password.count >= 6 {
+            let userId = UUID().uuidString
+            currentUser = User(
+                id: userId,
                 email: email,
-                joinDate: Date(),
-                displayName: email.components(separatedBy: "@").first
+                username: email.components(separatedBy: "@").first,
+                displayName: nil,
+                avatarUrl: nil
             )
-            completion(true)
+            isAuthenticated = true
         }
     }
     
-    func logout() {
-        // In a real app, you would clear tokens, etc.
-        isAuthenticated = false
+    func signOut() {
         currentUser = nil
+        isAuthenticated = false
     }
 }

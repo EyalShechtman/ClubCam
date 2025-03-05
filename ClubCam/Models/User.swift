@@ -7,16 +7,18 @@
 
 import Foundation
 
-struct User: Identifiable {
+struct User: Identifiable, Codable, Equatable {
     let id: String
     let email: String
-    let joinDate: Date
-    
-    // Additional user properties can be added here
+    var username: String?
     var displayName: String?
-    var profileImageURL: URL?
+    var avatarUrl: String?
     
-    var username: String {
-        return displayName ?? email.components(separatedBy: "@").first ?? "User"
+    enum CodingKeys: String, CodingKey {
+        case id
+        case email
+        case username
+        case displayName = "display_name"
+        case avatarUrl = "avatar_url"
     }
 } 
